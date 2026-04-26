@@ -3857,6 +3857,13 @@ server <- function(input, output){
                          col_sym_out="black", col="black",col_f="cyan",col_boot=rgb(1,0,0,0.15),
                          on_plot=FALSE,auto_cent=TRUE,coast=T, title="",save=TRUE,A95=FALSE,B95=FALSE,nb=1000,VGPint=1,plot=T){
     
+    #functions converting long & lat to xy
+    c2x <- function(lon,lat) {cos(d2r(lat))*sin(d2r(lon-lon0))}
+    c2y <- function(lon,lat) {(cos(d2r(lat0))*sin(d2r(lat)))-(sin(d2r(lat0))*cos(d2r(lat))*cos(d2r(lon-lon0)))}
+    #cut is cosin of c, when negative is behind projections, needs to be cut
+    cut <- function(lon,lat) {(sin(d2r(lat0))*sin(d2r(lat)))+(cos(d2r(lat0))*cos(d2r(lat))*cos(d2r(lon-lon0)))}
+    
+    
     #manipulate data
     colnames(VGP) <- c("lon","lat")
     vgpsN <- PmagDiR::common_DI(VGP,down = ifelse(mean(VGP$lat)<0,FALSE,TRUE))
@@ -3880,10 +3887,10 @@ server <- function(input, output){
     
     coord <- as.data.frame(lon0)
     coord$lat0 <- lat0
-    VGP$x <- PmagDiR::c2x(VGP$lon,VGP$lat,centLon = lon0)
-    VGP$y <- PmagDiR::c2y(VGP$lon,VGP$lat,centLon = lon0,centLat = lat0)
-    VGP$cut <- PmagDiR::cut(VGP$lon,VGP$lat,centLon = lon0,centLat = lat0)
-    
+    VGP$x <- c2x(lon = VGP$lon,lat = VGP$lat)
+    VGP$y <- c2y(lon = VGP$lon,lat = VGP$lat)
+    VGP$cut <- cut(lon = VGP$lon,VGP$lat)
+    assign("butta2",VGP,.GlobalEnv)
     #select symbol
     if(symbol=="c") {pch <- 21}
     else if(symbol=="s") {pch <- 22}
@@ -4010,6 +4017,7 @@ server <- function(input, output){
     }
     return(Plot_VGP_result)
   }
+  
   
   #function that built list of sites
   sites_list <- function(){

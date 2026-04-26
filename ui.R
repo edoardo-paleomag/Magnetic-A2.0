@@ -37,18 +37,20 @@ ui <- fluidPage(
                  fluidRow(column(12,h5("• Magnetic polarity stratigraphy")))
                ),
                mainPanel(
+                 # fluidRow(
+                 #   column(12,h4("In case of overloading (failing bootstrap, etc) please use also ",tags$a(href="https://edoardodallanave.shinyapps.io/MagneticA2/", 
+                 #                                                                                          "Magnetic-A2")))
+                 # ),
+                 # br(),
                  fluidRow(
-                   column(12,h4("In case of overloading (failing bootstrap, etc) please use also ",tags$a(href="https://edoardodallanave.shinyapps.io/MagneticA2/", 
-                                                                                                          "Magnetic-A2")))
+                   column(12,h2("Magnetic-A 2.0 - with simplified VGP and pole page."))
+                 ),
+                 fluidRow(
+                   column(12,h3("Fold test page is under construction."))
                  ),
                  br(),
                  fluidRow(
-                   column(12,h4("Or you can run Magnetic-A locally (and faster!)  by following the instructions ",tags$a(href="https://github.com/edoardo-paleomag/Magnetic-A/blob/main/README.md",
-                                                                                                                         "in the GitHub repository where it is stored.")))
-                 ),
-                 br(),
-                 fluidRow(
-                   column(12,h4("The User Guide is available as pdf file on my ",tags$a(href="https://edoardodallanave.wixsite.com/mysite", 
+                   column(12,h4("The User Guide (version 2.0 is under development) is available as pdf file on my ",tags$a(href="https://edoardodallanave.wixsite.com/mysite", 
                                                                                         "personal Webpage")))
                  )
                )
