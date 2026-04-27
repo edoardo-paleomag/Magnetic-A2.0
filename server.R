@@ -4646,6 +4646,11 @@ server <- function(input, output){
         if(MVGP_list$vgps[r,8]==""){
           #Added_poles$list
           temp <- MVGP_list$vgps[r,]
+          #next because otherwise gives error
+          temp$Lon <- as.numeric(temp$Lon)
+          temp$Lat <- as.numeric(temp$Lat)
+          temp$A95 <- as.numeric(temp$A95)
+          assign("butta",input$eul_long,.GlobalEnv)
           temp[1,5:6] <- round(PmagDiR::rot_DI(temp[1,5:6],               
                                                P_long = input$eul_long,
                                                P_lat = input$eul_lat,
