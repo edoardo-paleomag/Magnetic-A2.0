@@ -4661,7 +4661,7 @@ server <- function(input, output){
     n <- input$VGPs_List_rows_selected
     if(length(n)){
       #since A95rotate$new is treated like a table, it is created, if nrow is 0 then is made NULL in the end
-      A95rotate$new <- data.frame(matrix(ncol=8,nrow = 0))
+      A95rotate$new <- data.frame(matrix(ncol=9,nrow = 0))
       colnames(A95rotate$new) <- c("Loc.","Col","Sym","N","Lon","Lat","A95","B95","K")
       for(r in n){
         #assign name to new dataset, original plus _Rt
