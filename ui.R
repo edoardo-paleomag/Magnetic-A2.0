@@ -38,8 +38,15 @@ ui <- fluidPage(
                ),
                mainPanel(
                  fluidRow(
-                   column(12,h4("In case of overloading (failing bootstrap, etc) please use also ",tags$a(href="https://edoardodallanave.shinyapps.io/MagneticA2/", 
-                                                                                                          "Magnetic-A2")))
+                   column(12, h2("Magnetic-A 2.0"))
+                 ),
+                 br(),
+                 fluidRow(
+                   column(12, h3("With updated and simplified VGPs and Paleomagnetic poles calculation and plot."))
+                 ),
+                 fluidRow(
+                   column(12,h4("Version 1.0 still available at ",tags$a(href="https://edoardodallanave.shinyapps.io/MagneticA/", 
+                                                                                                          "Magnetic-A")))
                  ),
                  br(),
                  fluidRow(
