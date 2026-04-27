@@ -1191,10 +1191,6 @@ server <- function(input, output){
     specim$PCA_result_file <- modified_data
   })
   
-  
-  
-  
-  
   #delete selected directions permanently
   observeEvent(input$del_interpol,{
     to_delete <- input$saved_interpol_rows_selected
@@ -1439,8 +1435,6 @@ server <- function(input, output){
       dev.off()
     })
   
-  
-  
   ############ Takes direction input file and fix it depending on commands
   
   #create reactive file for stat
@@ -1475,9 +1469,6 @@ server <- function(input, output){
       }  
     }
   })
-  
-  
-  
   
   #fix dirs coordinate depending on input, file ncol, different cutoff
   fix_DI <- function(input_file,file=input$filetype,
@@ -1865,7 +1856,6 @@ server <- function(input, output){
     Dirs$dat <- input_file()
   })
   
-  
   #equal area function
   plot_dirs <- function(DI,Slat=input$lat,Slong=input$long,mode=input$mode,
                         colD=input$colD,colU=input$colU,sym=input$sym,GAD=input$addGAD){
@@ -1922,8 +1912,7 @@ server <- function(input, output){
       assign("inc_warn",NULL, envir = .GlobalEnv)
     }
   }
-  
-  
+  #send plot to UI
   output$directions <- renderPlot({
     #avoid errors if long and lat are missing
     req(input$lat)
@@ -2270,7 +2259,6 @@ server <- function(input, output){
     multiBoot$table_b <- unique(multiBoot$table_b)
   })
   
-  
   #open window to enter fisher mean details manually
   observeEvent(input$MultiFishDetails, {
     # display a modal dialog with a header, textinput and action buttons
@@ -2406,10 +2394,6 @@ server <- function(input, output){
       b <- input$multiBootTab_rows_selected
       if(length(b)){
         multiBoot$table_b <- multiBoot$table_b[-b,]
-        # for(i in b){
-        #   nome_riga <- rownames(multiBoot$table_b)[i]
-        #   multiEllips$ellips[[nome_riga]] <- NULL
-        #   }
       }
       if(nrow(multiBoot$table_b)==0){multiBoot$table_b <- NULL}
     }
@@ -2932,7 +2916,6 @@ server <- function(input, output){
             round(CMDT$result2[["mean_direction"]][["inc"]], digits = 1))}
   })
   
-  
   #execute CMDT test
   output$revtest2 <- renderPlot({
     revtest_plot2()
@@ -2969,16 +2952,16 @@ server <- function(input, output){
   #Calculates the zonal field for a given latitude and returns the horizontal and vertical components Btetha, Br.
   zonal <- function(lat,g10=-18,G2=0.0,G3=0.0,G4=0.0,a_r=1.0) {
     # Parameters:
-    # lat: Latitude in degrees.
-    # g10: Gauss coefficient g10 (default: -18).
-    # G2: Gauss coefficient G2 (default: 0.0).
-    # G3: Gauss coefficient G3 (default: 0.0).
-    # G4: Gauss coefficient G4 (default: 0.0).
-    # a_r: Earth radius divided by the distance from the center of the Earth (default: 1.0).
+    # lat: Latitude in degrees
+    # g10: Gauss coefficient g10
+    # G2: Gauss coefficient G2
+    # G3: Gauss coefficient G3 
+    # G4: Gauss coefficient G4 
+    # a_r: Earth radius divided by the distance from the center of the Earth 
     # Returns:
-    #   tuple: Tuple containing the following elements:
-    #   - Bttot (float): Total horizontal component Btetha.
-    # - Brtot (float): Total vertical component Br.
+    # tuple: List containing the following elements:
+    # Bttot (float): Total horizontal component Btetha.
+    # Brtot (float): Total vertical component Br.
     
     Theta<-90-lat
     g20<-G2*g10
@@ -3003,17 +2986,17 @@ server <- function(input, output){
   m_TAF <- function(GGPmodel="THG24", lat) {
     # Parameters:
     #   GGPmodel (dict): GGP model dictionary containing the following keys:
-    # - 'g10' (float): Gauss coefficient g10.
-    # - 'g20' (float): Gauss coefficient g20.
-    # - 'g30' (float): Gauss coefficient g30.
+    # 'g10': Gauss coefficient g10.
+    # 'g20': Gauss coefficient g20.
+    # 'g30': Gauss coefficient g30.
     # 
-    # lat (float): Latitude in degrees.
+    # lat: Latitude in degrees.
     # 
     # Returns:
     #   ndarray: Array `m` representing the time average field with shape (3,).
-    # - m[0] (float): Bx component (negative Btetha).
-    # - m[1] (float): By component (always 0).
-    # - m[2] (float): Bz component (negative Br).
+    # m[0]: Bx component (negative Btetha).
+    # m[1]: By component (always 0).
+    # m[2]: Bz component (negative Br).
     GGPmodel <- GGPmodels(GGPmodel)
     
     z <- zonal(lat = lat,g10 =GGPmodel[1],G2 = GGPmodel[2]/GGPmodel[1],G3 = GGPmodel[3]/GGPmodel[1])
@@ -3223,17 +3206,15 @@ server <- function(input, output){
   # Icdf: funzione cumulativa (CDF) in radianti
   AD_inc <- function(Is, Icdf) {
     # Parameters:
-    #   Is (array-like): Array of observed inclinations in degrees.
+    # Is (array-like): Array of observed inclinations in degrees.
     # Icdf (callable): Pchip function representing the cumulative distribution function (CDF) of inclinations for a given latitude.
     # 
     # Returns:
-    #   float: Test statistic (A2) for inclinations.
+    # Test statistic (A2) for inclinations.
     # 
     # Notes:
-    #   The Anderson-Darling (AD) test is a statistical test used to assess whether a sample of data comes from a specific probability distribution. This function calculates the AD test statistic for the distribution of inclinations based on the observed inclinations and the CDF of inclinations.
-    # 
+    # The Anderson-Darling (AD) test is a statistical test used to assess whether a sample of data comes from a specific probability distribution. This function calculates the AD test statistic for the distribution of inclinations based on the observed inclinations and the CDF of inclinations.
     # The AD test statistic measures the discrepancy between the observed data and the expected distribution. A larger AD test statistic indicates a greater discrepancy, suggesting that the observed data may not follow the expected distribution.
-    # 
     # It is important to note that this function assumes the input inclinations are in degrees and converts them to radians internally for consistency with the CDF function.
     
     Is <- sort(Is * pi / 180)  # ordina e converte in radianti
@@ -3252,18 +3233,11 @@ server <- function(input, output){
   # Dcdf: funzione CDF (in radianti) per le declinazioni
   AD_dec <- function(Ds, Dcdf) {
     # Parameters:
-    #   Ds (array-like): Array of observed declinations in degrees.
-    # Dcdf (callable): Pchip function representing the cumulative distribution function (CDF) of declinations for a given latitude.
+    #   Ds: declinations in degrees.
+    # Dcdf: Pchip function representing the cumulative distribution function (CDF) of declinations for a given latitude.
     # 
     # Returns:
-    #   float: Test statistic (A2) for declinations.
-    # 
-    # Notes:
-    #   The Anderson-Darling (AD) test is a statistical test used to assess whether a sample of data comes from a specific probability distribution. This function calculates the AD test statistic for the distribution of declinations based on the observed declinations and the CDF of declinations.
-    # 
-    # The AD test statistic measures the discrepancy between the observed data and the expected distribution. A larger AD test statistic indicates a greater discrepancy, suggesting that the observed data may not follow the expected distribution.
-    # 
-    # It is important to note that this function assumes the input declinations are in degrees and converts them to radians internally for consistency with the CDF function. Additionally, if any declinations are greater than 180 degrees, they are adjusted to the range -180 to 180 degrees before performing the test.
+    #   Test statistic (A2) for declinations.
     
     Ds[Ds > 180] <- Ds[Ds > 180] - 360  # normalizza nel range [-180, 180]
     Ds <- sort(Ds * pi / 180)  # ordina e converti in radianti
@@ -3280,19 +3254,18 @@ server <- function(input, output){
   #Perform the Anderson-Darling (AD) test on observed inclinations and declinations and Monte Carlo simulation to estimate 95% confidence bounds on V2dec and E
   svei_test <- function(DI, model_name = 'THG24', degree = 8, kappa = -1, num_sims = 1000,Shiny=F,EI_test=F,Plot=T) {
     #   Returns:
-    #     res_dict (dict): Dictionary with the following parameters:
-    #     kappa (float): kappa used in simulations
-    #   H (int): 0 if the null hypothesis cannot be rejected, 1 otherwise.
-    #   A2I (float): Test statistic for inclinations.
-    #   A2D (float): Test statistic for declinations.
-    #   pID (float): Representation of combined p-values (can be used for minimization to optimize latitude).
-    #   lat (float): Latitude of the site.
-    #   V2dec (float): Declination of minor principle component of data set. 
-    #   V2sim_min, V2sim_max (floats): Bounds on V2dec from Monte Carlo simulation
-    #   V2_result (integer): 0 if V2dec not in bounds, 1 if in bounds (consistent)
-    #   E (float): Elongation (tau2/tau3) of data set 
-    #   Esim_min, Esim_max (floats): Bounds on elongation from Monte Carlo simulation
-    #   E_result (integer): 0 if V2dec not in bounds, 1 if in bounds (consistent)
+    #   kappa (float): kappa used in simulations
+    #   H: 0 if the null hypothesis cannot be rejected, 1 otherwise.
+    #   A2I: Test statistic for inclinations.
+    #   A2D: Test statistic for declinations.
+    #   pID: Representation of combined p-values (can be used for minimization to optimize latitude).
+    #   lat: Latitude of the site.
+    #   V2dec: Declination of minor principle component of data set. 
+    #   V2sim_min, V2sim_max : Bounds on V2dec from Monte Carlo simulation
+    #   V2_result : 0 if V2dec not in bounds, 1 if in bounds (consistent)
+    #   E: Elongation (tau2/tau3) of data set 
+    #   Esim_min, Esim_max : Bounds on elongation from Monte Carlo simulation
+    #   E_result : 0 if V2dec not in bounds, 1 if in bounds (consistent)
     
     A2ref <- c(0.025, 0.050, 0.075, 0.100, 0.125, 0.150, 0.175, 0.200, 0.225, 0.250, 0.275,
                0.300, 0.325, 0.350, 0.375, 0.400, 0.425, 0.450, 0.475, 0.500, 0.525, 0.550,
@@ -3529,6 +3502,7 @@ server <- function(input, output){
   #reactive function
   SVEI_testPlot <- eventReactive(input$SVEIgo,{
     #set parameters
+    #MODEL NAME IS DEACTIVATED, IT WORKS WITH THG24 BY DEFAULT
     # if(input$model_name==1) modelname <- "THG24"
     # if(input$model_name==2) modelname <- "TK03"
     # if(input$model_name==3) modelname <- "CP88"
@@ -3791,7 +3765,6 @@ server <- function(input, output){
       }
     )
   },width = 850,height = 700)
-  
   ##################### END OF SVEI MODULE
   
   
@@ -3890,7 +3863,6 @@ server <- function(input, output){
     VGP$x <- c2x(lon = VGP$lon,lat = VGP$lat)
     VGP$y <- c2y(lon = VGP$lon,lat = VGP$lat)
     VGP$cut <- cut(lon = VGP$lon,VGP$lat)
-    assign("butta2",VGP,.GlobalEnv)
     #select symbol
     if(symbol=="c") {pch <- 21}
     else if(symbol=="s") {pch <- 22}
@@ -4017,7 +3989,6 @@ server <- function(input, output){
     }
     return(Plot_VGP_result)
   }
-  
   
   #function that built list of sites
   sites_list <- function(){
@@ -4231,16 +4202,7 @@ server <- function(input, output){
                                          tags$h3('Enter VGPs details from external file'),
                                          br(),
                                          fluidRow(
-                                           column(3,fileInput("vgpfile", label = "Load VGPs file") %>%
-                                                    helper(type = "inline",
-                                                           title = "Format file",
-                                                           content = c(
-                                                             "File consists of two comma separated columns, with (any text) header, containing:",
-                                                             "",
-                                                             "1- Longitude of the VGP",
-                                                             "2- Latitude of the VGP"
-                                                           ),
-                                                           size = "m",fade = T)),
+                                           column(3,fileInput("vgpfile", label = "Load VGPs file")),
                                            column(3,textInput("EVGP_sitename", label = "VGPs name",value = "Locality")),
                                            column(3,selectInput("VGP_ext_mode",label = "Hemisphere",choices = list("North"=1,"South"=2),selected = 1)),
                                            column(3,selectInput("EVGPcolor", label= "Color",
@@ -4398,11 +4360,7 @@ server <- function(input, output){
                                            column(3,numericInput("SVGPlon",label = "Longitude",value = 0)),
                                            column(3,numericInput("SVGPlat",label = "Latitude",value = 90,max = 90,min = -90)),
                                            column(3,numericInput("SVGPk",label = "K",value = 20)),
-                                           column(3,numericInput("k_tol",label = "K tol.",value = 0.1,min = 0.02) %>%
-                                                    helper(type = "inline",
-                                                           title = "K tolerance",
-                                                           content = c("Maximum difference between selected and simulated k. If set 0, it does not apply any tolerance test."),
-                                                           size = "m",fade = T)),
+                                           column(3,numericInput("k_tol",label = "K tol.",value = 0.1,min = 0.02)),
                                          ),
                                          fluidRow(
                                            column(3,numericInput("SVGPnb", label = "Bootstrap n.", value = 2000)),
@@ -4417,7 +4375,7 @@ server <- function(input, output){
                                            column(6,actionButton("saveSVGP",label = "Add to List of loaded VGPs",width = "100%")),
                                          ),
                                          #result of statistic 
-                                         h5(textOutput("Sim_fishpole")),     #IT HAS TO GIVE ONLY FISHER AUTOMATICALLY!!!
+                                         h5(textOutput("Sim_fishpole")),     
                                          fluidRow(
                                            column(1),
                                            plotOutput(outputId = "SVGP_plot")
@@ -4525,10 +4483,9 @@ server <- function(input, output){
                               A95 = T,
                               B95 = F,
                               VGPint = 4)
-    
   }
   
-  #send current VGP to list and reactive VGP_saved_list        #FIX HERE REMOVING A95 or BOOTSRAP
+  #send current VGP to list and reactive VGP_saved_list        
   observeEvent(input$saveSVGP,{
     req(SVGP$vgps)
     VGP <- SVGP$vgps
@@ -4689,7 +4646,7 @@ server <- function(input, output){
         if(MVGP_list$vgps[r,8]==""){
           #Added_poles$list
           temp <- MVGP_list$vgps[r,]
-          temp[1,5:6] <- round(PmagDiR::rot_DI(temp[1,5:6],               #Tiene poli ruotati in memoria
+          temp[1,5:6] <- round(PmagDiR::rot_DI(temp[1,5:6],               
                                                P_long = input$eul_long,
                                                P_lat = input$eul_lat,
                                                rot = input$eul_rot),digits = 2)
@@ -4918,6 +4875,7 @@ server <- function(input, output){
       names(VGP_saved$list)[names(VGP_saved$list)==old_Loc_name] <- MVGP_list$vgps[info$row,1]
       VGP_saved$list[[MVGP_list$vgps[info$row,1]]][[1]][["color"]] <- MVGP_list$vgps[info$row,2]
       VGP_saved$list[[MVGP_list$vgps[info$row,1]]][[1]][["symbol"]] <- MVGP_list$vgps[info$row,3]
+      assign("butta",VGP_saved$list,.GlobalEnv)
     }
   })
   
@@ -5253,8 +5211,6 @@ server <- function(input, output){
     }
     if(nrow(smallcircle$list)==0){smallcircle$list <- NULL}
   })
-  
-  
   
   #########################MODAL DIALOG WITH EXTERNAL PMAG POLE#########
   observeEvent(input$add_PPole,{
@@ -5637,8 +5593,6 @@ server <- function(input, output){
     if(nrow(greatcircle$list)==0){greatcircle$list <- NULL}
   })
   
-  
-  
   ######## FUNCTIONS FOR PLOTTING MULTIPLE VGP PARTS #########
   #plot VGPs selected from list
   plot_selected_VGP <- function(s,lat0,lon0,Type=1){
@@ -5677,22 +5631,11 @@ server <- function(input, output){
                            size = 1.2,on_plot = T)
       }
       
-      # #plot pole names if required
-      # if(input$MVGP_names_YN==2){
-      #   #define coordinate for name of pole
-      #   x <- PmagDiR::c2x(as.numeric(MVGP_list$vgps[i,5]),as.numeric(MVGP_list$vgps[i,6]),centLon = lon0)
-      #   y <- PmagDiR::c2y(as.numeric(MVGP_list$vgps[i,5]),as.numeric(MVGP_list$vgps[i,6]),centLon = lon0,centLat = lat0)
-      #   name <- MVGP_list$vgps[i,1]
-      #   #plot names
-      #   text(x=x, y=y,pos=3,substitute(paste(bold(name))), cex= 1.2)
-      # }
     }
   }
   
   #create reactive file for merged VGPs color and symbol
   MrVGP <- reactiveValues(col_f=NULL)
-  
-  
   
   #function that creates plots for Multiple VGP analysis
   all_poles_plotter <- function(MVGP_ModalDialog=FALSE,Type=1){
@@ -5939,7 +5882,6 @@ server <- function(input, output){
     Stereosize$size <- Stereosize$size-15
   })
   
-  
   #############SEND PLOTS TO VGP ANALYSIS FIGURES
   output$MVGP_plot <- renderPlot({
     all_poles_plotter(Type = input$VGPsType)
@@ -5948,7 +5890,7 @@ server <- function(input, output){
     #Export graphic
     output$VGPs_G <- downloadHandler(
       filename = function() {
-        paste(input$fileN_MVGP,"_Poles_", Sys.Date(), ".pdf", sep="")
+        paste(input$fileN_VGP, Sys.Date(), ".pdf", sep="")
       },
       content = function(file) {
         pdf(file, onefile = TRUE,width = 11,height = 11)
@@ -5959,7 +5901,7 @@ server <- function(input, output){
     #export Poles list and stat
     output$VGPs_table <- downloadHandler(
       filename = function() {
-        paste("Loaded_VGPs_list_", Sys.Date(), ".csv", sep="")
+        paste(input$fileN_VGP, Sys.Date(), ".csv", sep="")
       },
       content = function(file) {
         write.csv(MVGP_list$vgps,file,row.names = F)
@@ -5971,7 +5913,7 @@ server <- function(input, output){
       filename = function() {
         s <- input$VGPs_List_rows_selected
         #name is of the file if only one, generic if more
-        paste(ifelse(length(s)>1,"Selected_VGPs_",paste(MVGP_list$vgps[s,1],"_",sep = "")), 
+        paste(ifelse(length(s)>1,input$fileN_VGP,paste(MVGP_list$vgps[s,1],"_",sep = "")), 
               Sys.Date(), 
               ifelse(length(s)>1,".zip",".csv"), sep="")
       },
@@ -6014,7 +5956,7 @@ server <- function(input, output){
     
     output$VGPs_stats <- downloadHandler(
       filename = function() {
-        paste("Selected_poles_stats_", Sys.Date(), ".csv", sep="")
+        paste(input$fileN_VGP, Sys.Date(), ".csv", sep="")
       },
       content = function(file){
         s <- input$VGPs_List_rows_selected
@@ -6028,7 +5970,6 @@ server <- function(input, output){
       }
     )
   },width = reactive({Stereosize$size}), height = reactive({Stereosize$size}))
-  
   
   ############ END OF VIRTUAL GEOMAGNETIC POLES MODULE
   
@@ -6260,4 +6201,6 @@ server <- function(input, output){
     geo_point_plot()
   },height = 700)
   ############ END OF MAPPING MODULE
+  
+  ###################################END OF ALL SCRIPTS SO FAR
 }

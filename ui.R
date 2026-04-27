@@ -37,20 +37,18 @@ ui <- fluidPage(
                  fluidRow(column(12,h5("• Magnetic polarity stratigraphy")))
                ),
                mainPanel(
-                 # fluidRow(
-                 #   column(12,h4("In case of overloading (failing bootstrap, etc) please use also ",tags$a(href="https://edoardodallanave.shinyapps.io/MagneticA2/", 
-                 #                                                                                          "Magnetic-A2")))
-                 # ),
-                 # br(),
                  fluidRow(
-                   column(12,h2("Magnetic-A 2.0 - with simplified VGP and pole page."))
-                 ),
-                 fluidRow(
-                   column(12,h3("Fold test page is under construction."))
+                   column(12,h4("In case of overloading (failing bootstrap, etc) please use also ",tags$a(href="https://edoardodallanave.shinyapps.io/MagneticA2/", 
+                                                                                                          "Magnetic-A2")))
                  ),
                  br(),
                  fluidRow(
-                   column(12,h4("The User Guide (version 2.0 is under development) is available as pdf file on my ",tags$a(href="https://edoardodallanave.wixsite.com/mysite", 
+                   column(12,h4("Or you can run Magnetic-A locally (and faster!)  by following the instructions ",tags$a(href="https://github.com/edoardo-paleomag/Magnetic-A/blob/main/README.md",
+                                                                                                                         "in the GitHub repository where it is stored.")))
+                 ),
+                 br(),
+                 fluidRow(
+                   column(12,h4("The User Guide is available as pdf file on my ",tags$a(href="https://edoardodallanave.wixsite.com/mysite", 
                                                                                         "personal Webpage")))
                  )
                )
@@ -776,7 +774,7 @@ ui <- fluidPage(
              sidebarLayout(
                sidebarPanel(width = 6,
                             fluidRow(
-                              column(3,textInput("fileN_VGP",label = "Export name",value = "VGP_&_Poles")),     #non usato da niente per ora, sostituito da site name in DD&A Page per direzioni interne
+                              column(3,textInput("fileN_VGP",label = "Export name",value = "VGP_&_Poles")),     
                               column(3,selectInput(inputId = "VGPsType",label = "Type",
                                                    choices = list("VGPs"=1,"Fisher"=2,"Bootstrapped"=3),selected = 1)),
                               column(3,selectInput("MVGP_names_YN",label = "Plot poles name",
@@ -792,7 +790,7 @@ ui <- fluidPage(
                               column(3,numericInput("MultiVGPGrid",label = "Grid", value = 30))
                             ),
                             fluidRow(
-                              column(1, h4("") %>%
+                              column(3, h4("Action buttons")%>%
                                        helper(type = "inline",
                                               title = "Buttons description",
                                               content = c(
@@ -820,8 +818,7 @@ ui <- fluidPage(
                                                 "",
                                                 "Delete: delete selected entries from list."
                                               ),
-                                              size = "m",fade = T)),
-                              column(11,h4("VGP and Pole action buttons"))
+                                              size = "m",fade = T))
                             ),
                             fluidRow(
                               column(3, actionButton(inputId = "inter_VGPs",label = "Internal",width = "100%")),
@@ -844,7 +841,7 @@ ui <- fluidPage(
                               column(3,actionButton("deletevgp",label = "Delete",width = "100%")),
                             ),
                             br(),
-                            h4("List of loaded VGPs:"),
+                            h4("List of loaded VGPs and Poles:"),
                             br(),
                             fluidRow(
                               column(12,DT::dataTableOutput("VGPs_List"))
