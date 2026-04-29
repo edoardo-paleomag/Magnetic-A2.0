@@ -1,2 +1,56 @@
 # Magnetic-A2.0
-New version of Magnetic-A, under test
+# Magnetic-A2.0 - How to run locally
+
+The documents and data within this git-hub folder form the basis for the Magnetic-A application available online at https://edoardodallanave.shinyapps.io/MagneticA/. The code for the application can be found in the documents “server.R” and “ui.R”. 
+
+If you use this code for publication purposes, please cite (for now):
+
+Dallanave, E. (2026). Magnetic-A: The New R‐Based Toolbox for Analysis of Paleomagnetic Data. Earth and Space Science, 13(e2025EA004863). https://doi.org/10.1029/2025EA004863
+
+A dedicated publication is under review!
+
+#### If you will be processing a large amount of data using Magnetic-A - it is adventageous to run the program locally. To run Magnetic-A locally on your own computer follow the steps below.
+
+### 1.DOWNLOAD R AND R-STUDIO. Instructions for downloads can be found at:
+* R = https://www.r-project.org/
+* R studio = https://www.rstudio.com/products/rstudio/download/
+* Open R-Studio
+* NOTE: R-Studio facilitate the interaction with R, but the same commands described in point 2 and 3 can be typed in the R Console.
+
+### 2.INSTALLING THE REQUIRED PACKAGES (SKIP to step 3 IF THE PACKAGES ARE ALREADY INSTALLED IN YOUR DEVICE): 
+all package used by Magnetic-A are stored in CRAN (Except PmagDiR) and can be downloaded by typing in the console:
+
+* install.packages("plyr")
+* install.packages("dplyr")
+* install.packages("shiny")
+* install.packages("shinyWidgets")
+* install.packages("DT")
+* install.packages("shinyhelper")
+* install.packages("shinyjqui")
+* install.packages("glue")
+* install.packages("tidyverse")
+  
+#### PmagDiR is stored in GitHub. To install it, devtools (package hosted in CRAN) is required. Please type:
+
+* install.packages("devtools")
+* library(devtools)
+* install_github("edoardo-paleomag/PmagDiR")
+
+### 3.STARTING MAGNETIC-A
+
+After installation, all packages are automatically called by launching Magnetic-A. To do so, type this:
+
+* shiny::runGitHub("Magnetic-A", "edoardo-paleomag")
+
+Alternatively, download the full Magnetic-A content in a folder on your device and type:
+
+* shiny::runApp("/Path_to_the _folder/Name_of_the_folder/")
+
+The latter option allows to operate offline.
+
+For help and inquiries, please contact me: 
+
+* edoardo.dallanave@unimi.it
+
+
+
