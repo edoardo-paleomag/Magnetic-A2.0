@@ -205,6 +205,7 @@ ui <- fluidPage(
                tabPanel("Directions display & average",
                         sidebarLayout(
                           sidebarPanel(width = 5,
+                                       h4("Please assign different Site names to different datasets!"),
                                        fluidRow(
                                          column(6,fileInput("file", label= "Load directions file")),
                                          column(6,textInput("fileN",label = "Site name",value = "Site"))
