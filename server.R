@@ -3,7 +3,7 @@ server <- function(input, output){
   #activate helpers
   observe_helpers()
   
-  ############ VECTOR END-POINTS MODULE
+  ############ VECTOR END-POINTS MODULE##########
   
   #Function for plottin zijderveld used in 2 screens
   #function plotting the vector end point diagram and return values without order of magnitude
@@ -1617,7 +1617,7 @@ server <- function(input, output){
   output$geowarning4 <- renderText({geowarn()})
   
   
-  ############ DIRECTIONS DISPILAY & AVERAGE
+  ############ DIRECTIONS DISPILAY & AVERAGE##########
   
   ####### DIRECTIONS DISPILAY & AVERAGE SUBPAGE
   #modified fisher_plot function
@@ -2585,7 +2585,7 @@ server <- function(input, output){
   ####### END OF MULTIPLE DIRECTIONS AND AVERAGED PLOT SUBPAGES
   ############ END OF DIRECTIONS DISPILAY & AVERAGE
   
-  ############ BOOTSTRAPPED CONFIDENCE MODULE
+  ############ BOOTSTRAPPED CONFIDENCE MODULE###############
   #create reactive file to append things
   B95 <- reactiveValues(result_1=NULL)
   
@@ -2757,7 +2757,7 @@ server <- function(input, output){
   })
   ############ END OF BOOTSTRAPPED CONFIDENCE MODULE
   
-  ############ REVERSAL TEST MODULE
+  ############ REVERSAL TEST MODULE#############
   #create result reactive file
   CMDT <- reactiveValues(result=NULL)
   
@@ -2829,7 +2829,7 @@ server <- function(input, output){
   },width = 1200,height = 700)
   ############ END OF REVERSAL TEST MODULE
   
-  ############ CMDT OF TWO DATASETS MODULE
+  ############ CMDT OF TWO DATASETS MODULE##############
   second_DI <- observeEvent(input$CMDT_2_file,{
     dat <- read.csv(input$CMDT_2_file$datapath)
     CMDT$DI2 <- dat
@@ -2924,7 +2924,7 @@ server <- function(input, output){
   ############ END OF CMDT OF TWO DATASETS MODULE
   
   
-  ##################### SVEI MODULE 
+  ##################### SVEI MODULE ###################
   # Restituisce la lista con i parametri del modello GGP richiesto 
   GGPmodels <- function(model = 'THG24') {
     CP88 <- data.frame(t(c(g10 = -30, g20 = -1.8, g30 = 0.0, sig10 = 3.0, sig11 = 3.0,
@@ -3768,7 +3768,7 @@ server <- function(input, output){
   ##################### END OF SVEI MODULE
   
   
-  ############ TK03.GAD INCLINATION FLATTENING MODULE
+  ############ TK03.GAD INCLINATION FLATTENING MODULE###############
   #Function that correct inclination shallowing after tk03.GAD model
   
   #create reactive file
@@ -3816,7 +3816,7 @@ server <- function(input, output){
   ############ END OF TK03.GAD INCLINATION FLATTENING MODULE
   
   
-  ############ VIRTUAL GEOMAGNETIC POLES MODULE
+  ############ VIRTUAL GEOMAGNETIC POLES MODULE###########
   #create service environment
   MVGP_temp <- new.env()
   assign("MVGP_temp", MVGP_temp, envir = .GlobalEnv)
@@ -4024,6 +4024,7 @@ server <- function(input, output){
   
   
   ###########################MODAL DIALOG WITH INTERNAL VGPs DETAILS ##################
+  ####opens modal window
   observeEvent(input$inter_VGPs, {
     # display a modal dialog with a header, textinput and action buttons
     showModal(jqui_draggable(modalDialog(size = "l",
@@ -4053,7 +4054,7 @@ server <- function(input, output){
                                          h4(textOutput("flatwarning")),
                                          br(),
                                          fluidRow(
-                                           column(6,actionButton("saveVGP",label = "Add to List of loaded VGPs",width = "100%")),
+                                           column(6,actionButton("saveVGP",label = "Add to List of loaded VGPs and Poles",width = "100%")),
                                            column(6, downloadButton("VGPs_Exp",label = "Export VGPs",style = "width:100%;")),
                                          ),
                                          #result of statistic 
@@ -4224,7 +4225,7 @@ server <- function(input, output){
                                              display_pct = TRUE))
                                          ),
                                          fluidRow(
-                                           column(12,actionButton("saveEVGP",label = "Add to List of loaded VGPs",width = "100%")),
+                                           column(12,actionButton("saveEVGP",label = "Add to List of loaded VGPs and Poles",width = "100%")),
                                          ),
                                          #result of statistic 
                                          h5(textOutput("Ext_fishpole")),
@@ -4341,6 +4342,7 @@ server <- function(input, output){
   })
   
   #########################MODAL DIALOG WITH SIMULATED VGPs DETAILS##########
+  #####open modal window
   observeEvent(input$sim_VGPs,{
     # display a modal dialog with a header, text input and action buttons
     showModal(jqui_draggable(modalDialog(size = "l",
@@ -4371,8 +4373,8 @@ server <- function(input, output){
                                              display_pct = TRUE))
                                          ),                        
                                          fluidRow(
-                                           column(6,actionButton("SVGPgo",label = "GENERATE VGP",width = "100%")),
-                                           column(6,actionButton("saveSVGP",label = "Add to List of loaded VGPs",width = "100%")),
+                                           column(6,actionButton("SVGPgo",label = "Generate VGPs",width = "100%")),
+                                           column(6,actionButton("saveSVGP",label = "Add to List of loaded VGPs and Poles",width = "100%")),
                                          ),
                                          #result of statistic 
                                          h5(textOutput("Sim_fishpole")),     
@@ -4521,6 +4523,8 @@ server <- function(input, output){
   })
   
   #########################MODAL DIALOG WITH ROTATED VGPs DETAILS##########
+  
+  #####opens modal window
   observeEvent(input$rot_VGPs,{
     # display a modal dialog with a header, text input and action buttons
     showModal(jqui_draggable(modalDialog(size = "l",
@@ -4541,7 +4545,7 @@ server <- function(input, output){
                                          ),
                                          fluidRow(
                                            column(6, actionButton("eulerrot",label = "Rotate",width = "100%")),
-                                           column(6, actionButton("eulersave",label = "Add to List of loaded VGPs", width = "100%"))
+                                           column(6, actionButton("eulersave",label = "Add to List of loaded VGPs and Poles", width = "100%"))
                                          ),
                                          fluidRow(
                                            column(1),
@@ -4791,6 +4795,7 @@ server <- function(input, output){
   },width = 710, height = 710)
   
   #########################MODAL DIALOG WITH MERGED VGPs DETAILS##########
+  ####Opens modal window
   observeEvent(input$merg_VGPs,{
     # display a modal dialog with a header, text input and action buttons
     showModal(jqui_draggable(modalDialog(size = "l",
@@ -4815,7 +4820,7 @@ server <- function(input, output){
                                              display_pct = TRUE))
                                          ),
                                          fluidRow(
-                                           column(12,actionButton("add_MVGPs",label = "Add merged VGPs to list",width = "100%")),
+                                           column(12,actionButton("add_MVGPs",label = "Add to list of loaded VGPs and Poles",width = "100%")),
                                          ),
                                          #result of statistic 
                                          h5(textOutput("MVGP_ALLVGPS_stat")),
@@ -5023,8 +5028,8 @@ server <- function(input, output){
                                            column(4,numericInput("LocSize",label = "Symbol size",value = 1)),
                                          ),
                                          fluidRow(
-                                           column(6, actionButton("addlocality",label = "ADD TO LOCALITY LIST",width = "100%")),
-                                           column(6, actionButton("cutlocality",label = "DELETE FROM LOCALITY LIST",width = "100%"))
+                                           column(6, actionButton("addlocality",label = "Add to list",width = "100%")),
+                                           column(6, actionButton("cutlocality",label = "Delete from list",width = "100%"))
                                          ),
                                          br(),
                                          fluidRow(
@@ -5129,13 +5134,13 @@ server <- function(input, output){
       fluidRow(
         column(4,numericInput(inputId = "SCrad",label = "Radius",value = 0,min = 0,max = 180)),
         column(4,selectInput(inputId = "SCstyle",label = "Circle style",
-                             choices = list("line"=1,"dashed"=2,"dotted"=3, "dotdash"=4),selected = 1)),
+                             choices = list("1-line"=1,"2-dashed"=2,"3-dotted"=3, "4-dotdash"=4),selected = 1)),
         column(4,selectInput("SCcolor", label= "Circle color",
                              choices= list("black"=1,"blue"=2,"green"=3,"pink"=4,"purple"=5,"brown"=6,"red"=7,"yellow"=8,"cyan"=9,"gray"=10), selected=1)),
       ),
       fluidRow(
-        column(6, actionButton("addSC",label = "ADD TO LIST",width = "100%")),
-        column(6, actionButton("cutSC",label = "DELETE FROM LIST",width = "100%"))
+        column(6, actionButton("addSC",label = "Add to list",width = "100%")),
+        column(6, actionButton("cutSC",label = "Delete from list",width = "100%"))
       ),
       br(),
       fluidRow(
@@ -5218,6 +5223,8 @@ server <- function(input, output){
   })
   
   #########################MODAL DIALOG WITH EXTERNAL PMAG POLE#########
+  
+  ######open modal window
   observeEvent(input$add_PPole,{
     #reset input file or it stays there
     extpole$listfile <- NULL
@@ -5238,11 +5245,11 @@ server <- function(input, output){
                                                                 choices= list("black"=1,"blue"=2,"green"=3,"pink"=4,"purple"=5,"brown"=6,"red"=7,"yellow"=8,"cyan"=9,"gray"=10, "white"=11), selected=2)),
                                            column(4,selectInput("extrapolesimbol", label= "Pole symbol",
                                                                 choices = list("circle"=1, "square"=2, "diamond"=3,"triangle"=4),selected=1)),
-                                           column(4,textInput("extrapolename",label = " Manual pole name"))
+                                           column(4,textInput("extrapolename",label = " Manual pole name",value = "E-Pole"))
                                          ),
                                          br(),
                                          fluidRow(
-                                           column(12, actionButton("addextrapole",label = "ADD TO EXTERNAL POLES LIST",width = "100%"))
+                                           column(12, actionButton("addextrapole",label = "Add to list of loaded VGPs and Poles",width = "100%"))
                                          ),
                                          br(),
                                          easyClose = TRUE,
@@ -5331,6 +5338,7 @@ server <- function(input, output){
   })
   
   #########################MODAL DIALOG WITH FISHER A95 DETAILS##########
+  #####open modal window
   observeEvent(input$add_A95,{
     # display a modal dialog with a header, text input and action buttons
     showModal(jqui_draggable(modalDialog(size = "m",
@@ -5345,7 +5353,7 @@ server <- function(input, output){
                                          ),
                                          br(),
                                          fluidRow(
-                                           column(12,actionButton("add_FISHER",label = "Add A95 to list of poles",width = "100%")),
+                                           column(12,actionButton("add_FISHER",label = "Add to list of loaded VGPs and Poles",width = "100%")),
                                          ),
                                          #result of statistic 
                                          h5(textOutput("Fisher_A95")),
@@ -5466,8 +5474,8 @@ server <- function(input, output){
                                          ),
                                          br(),
                                          fluidRow(
-                                           column(6,actionButton("add_GCPole",label = "Calculate Pole of Plane",width = "100%")),
-                                           column(6,actionButton(inputId = "cut_GCPole",label = "Delete Pole of Plane",width = "100%"))
+                                           column(6,actionButton("add_GCPole",label = "Add Plane to list",width = "100%")),
+                                           column(6,actionButton(inputId = "cut_GCPole",label = "Delete Plane from list",width = "100%"))
                                          ),
                                          #result of statistic 
                                          h5(textOutput("GC_MAD")),
@@ -5877,7 +5885,6 @@ server <- function(input, output){
     }
   }
   
-  #############################################################
   #next few lines make size of figure adjustable
   Stereosize <- reactiveValues(size=710)
   observeEvent(input$plusSize,{
@@ -5979,7 +5986,7 @@ server <- function(input, output){
   ############ END OF VIRTUAL GEOMAGNETIC POLES MODULE
   
   
-  ############ MAGNETIC POLARITY MODULE
+  ############ MAGNETIC POLARITY MODULE##################
   #read file if present, reset if requested
   depthfile <- reactive({
     read.csv(file = input$depth_file$datapath)
@@ -6079,7 +6086,7 @@ server <- function(input, output){
   },width = 900,height = 800)
   ############ END OF MAGNETIC POLARITY MODULE
   
-  ############ MAPPING MODULE
+  ############ MAPPING MODULE#################
   #creates reactive value for checking if file is uploaded
   values <- reactiveValues(mapsites = NULL)
   #check for uploaded file

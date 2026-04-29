@@ -28,7 +28,7 @@ ui <- fluidPage(
                  ),
                  #br(),
                  fluidRow(
-                   column(12,h4("A R-Shiny-based complete toolbox for paleomagnetic analyses."))
+                   column(12,h4("A R-Shiny-based comprehensive toolbox for paleomagnetic analyses."))
                  ),
                  fluidRow(column(12,h5("• Paleomagnetic directions analysis"))),
                  fluidRow(column(12,h5("• Parametric and non-parametric statistics and test for consistency with field model"))),
@@ -42,18 +42,25 @@ ui <- fluidPage(
                  ),
                  br(),
                  fluidRow(
-                   column(12, h3("With updated and simplified VGPs and Paleomagnetic poles calculation and plot."))
+                   column(12, h3("What's new?"))
+                 ),
+                 fluidRow(
+                   column(12,h3("• Updated and simplified VGPs and Pmag Poles part"))
+                 ),                 
+                 fluidRow(
+                   column(12,h3("• Draggable interactive window"))
+                 ),
+                 fluidRow(
+                   column(12,h4("Non-parametric fold test is under development"))
                  ),
                  fluidRow(
                    column(12,h4("Version 1.0 still available at ",tags$a(href="https://edoardodallanave.shinyapps.io/MagneticA/", 
-                                                                                                          "Magnetic-A")))
+                                                                         "Magnetic-A")))
                  ),
-                 br(),
                  fluidRow(
                    column(12,h4("Or you can run Magnetic-A locally (and faster!)  by following the instructions ",tags$a(href="https://github.com/edoardo-paleomag/Magnetic-A/blob/main/README.md",
                                                                                                                          "in the GitHub repository where it is stored.")))
                  ),
-                 br(),
                  fluidRow(
                    column(12,h4("The User Guide is available as pdf file on my ",tags$a(href="https://edoardodallanave.wixsite.com/mysite", 
                                                                                         "personal Webpage")))
@@ -809,9 +816,11 @@ ui <- fluidPage(
                                                 "",
                                                 "Merge VGPs: merge different VGPs sets into one.",
                                                 "",
-                                                "Add Pole: paleomagnetic pole(s) manually or from list exported from this window.",
+                                                "Pmag Pole: paleomagnetic pole(s) manually or from list exported from this window.",
                                                 "",
                                                 "Rotate: rotate VGPs or poles applying Euler parameters.",
+                                                "",
+                                                "Fisher A95: calculate and add to list Fisher mean and parameters.",
                                                 "",
                                                 "APWP: add on plot APWP either from Magnetic-A or from file (four columns, comma separated, with any header: 1-Age, 2-Long, 3-Lat, 4-A95).",
                                                 "",
@@ -819,9 +828,7 @@ ui <- fluidPage(
                                                 "",
                                                 "Small circle: add circles to plot, defined by center longitude and latitude, and radius.",
                                                 "",
-                                                "Fisher A95: calculate and add to list Fisher mean and parameters.",
-                                                "",
-                                                "Great circle: calculate pole of plane (and plot great) circles through selected poles and (if requested) localities",
+                                                "Great circle: calculate pole of plane and plot great circles through selected poles and (if requested) localities",
                                                 "",
                                                 "Delete: delete selected entries from list."
                                               ),
@@ -831,28 +838,35 @@ ui <- fluidPage(
                               column(3, actionButton(inputId = "inter_VGPs",label = "Internal",width = "100%")),
                               column(3, actionButton(inputId = "ext_VGPs",label = "External",width = "100%")),
                               column(3, actionButton(inputId = "sim_VGPs",label = "Simulate",width = "100%")),
-                              column(3,actionButton(inputId = "merg_VGPs",label = "Merge VGPs",width = "100%")),
+                              column(3,actionButton(inputId = "merg_VGPs",label = "Merge",width = "100%")),
                             ),
                             br(),
                             fluidRow(
-                              column(3,actionButton("add_PPole",label = "Add Pole",width = "100%")),
+                              column(3,actionButton("add_PPole",label = "Pmag Pole",width = "100%")),
                               column(3, actionButton(inputId = "rot_VGPs",label = "Rotate",width = "100%")),
+                              column(3,actionButton(inputId = "add_A95",label = "Fisher A95",width = "100%")),
                               column(3,actionButton(inputId = "add_apwp",label = "APWP",width = "100%")),
-                              column(3,actionButton(inputId = "localitydetails",label = "Locality",width = "100%")),
                             ),
                             br(),
                             fluidRow(
+                              column(3,actionButton(inputId = "localitydetails",label = "Locality",width = "100%")),
                               column(3,actionButton(inputId = "smCircle",label = "Small circle",width = "100%")),
-                              column(3,actionButton(inputId = "add_A95",label = "Fisher A95",width = "100%")),
                               column(3,actionButton(inputId = "add_GCircle",label = "Great circle",width = "100%")),
                               column(3,actionButton("deletevgp",label = "Delete",width = "100%")),
                             ),
                             br(),
                             h4("List of loaded VGPs and Poles:"),
-                            br(),
                             fluidRow(
-                              column(12,DT::dataTableOutput("VGPs_List"))
+                              column(12,DT::dataTableOutput("VGPs_List")),
                             ),
+                            fluidRow(
+                              column(12,h5("Name, color, and symbol are editable, double-click on the cell.")),
+                            ),
+                            fluidRow(
+                              column(12,h6("Valid symbols: c= circle, d= diamond, s= square, t= triangle. Any color accepted by R can be typed in.")),
+                            ),
+                            br(),
+                            
                ),
                mainPanel(width = 6,
                          fluidRow(
