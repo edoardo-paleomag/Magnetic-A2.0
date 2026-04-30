@@ -48,7 +48,7 @@ ui <- fluidPage(
                    column(12,h3("• Updated and simplified VGPs and Pmag Poles part"))
                  ),                 
                  fluidRow(
-                   column(12,h3("• Draggable interactive window"))
+                   column(12,h3("• Draggable interactive pop-up windows"))
                  ),
                  fluidRow(
                    column(12,h4("Non-parametric fold test is under development"))
